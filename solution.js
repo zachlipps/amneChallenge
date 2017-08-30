@@ -13,6 +13,15 @@ fs.readFile('input.txt', function(err, data) {
   let runDirection;
   let runQueue = [];
 
+  const enqueueRun = () => {
+    if (runDirection) {
+      runQueue.push({
+        direction: runDirection,
+        magnitude: currentRun,
+      });
+    }
+  };
+
   const findTrend = (index) => {
     const currentPrice = housePrices[index];
     const previousPrice = housePrices[index - 1];
@@ -21,10 +30,7 @@ fs.readFile('input.txt', function(err, data) {
       if (runDirection === 'inc') {
         currentRun += 1;
       } else {
-        runQueue.push({
-          direction: runDirection,
-          magnitude: currentRun,
-        });
+        enqueueRun();
         currentRun = 1;
       }
       runDirection = 'inc';
@@ -33,10 +39,7 @@ fs.readFile('input.txt', function(err, data) {
       if (runDirection === 'dec') {
         currentRun += 1;
       } else {
-        runQueue.push({
-          direction: runDirection,
-          magnitude: currentRun,
-        });
+        enqueueRun();
         currentRun = 1;
       }
       runDirection = 'dec';
@@ -45,10 +48,7 @@ fs.readFile('input.txt', function(err, data) {
       if (runDirection === 'flat') {
         currentRun += 1;
       } else {
-        runQueue.push({
-          direction: runDirection,
-          magnitude: currentRun,
-        });
+        enqueueRun();
         currentRun = 1;
       }
       runDirection = 'flat';
@@ -56,10 +56,7 @@ fs.readFile('input.txt', function(err, data) {
 
     // this is unnecesary beacuse dont need to queue last element as it can never be dequeued
     if (index === n - 1) {
-      runQueue.push({
-        direction: runDirection,
-        magnitude: currentRun,
-      });
+      enqueueRun();
     }
   };
 
