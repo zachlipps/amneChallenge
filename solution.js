@@ -22,6 +22,24 @@ fs.readFile('input.txt', function(err, data) {
     }
   };
 
+  const dequeueRun = () => {
+    const { direction, magnitude } = runQueue[0];
+
+    if (direction === 'inc') {
+      currentSubrangeTotal -= magnitude;
+      runQueue[0].magnitude -= 1;
+    } else if (direction === 'dec') {
+      currentSubrangeTotal += magnitude;
+      runQueue[0].magnitude -= 1;
+    } else {
+      runQueue[0].magnitude -= 1;
+    }
+
+    if (runQueue[0].magnitude === 0) {
+      runQueue.shift();
+    }
+  };
+
   const findTrend = (index) => {
     const currentPrice = housePrices[index];
     const previousPrice = housePrices[index - 1];
@@ -67,11 +85,13 @@ fs.readFile('input.txt', function(err, data) {
       findTrend(i);
     } else {
       // write current answer to outout file
+      console.log(currentSubrangeTotal);
       // find trend at next index
-      // decrement the first run
       findTrend(i);
+      // decrement the first run
+      dequeueRun();
     }
   }
-
-  console.log(runQueue);
+  //add this for last output which is found after last trend is found
+  console.log(currentSubrangeTotal);
 });
