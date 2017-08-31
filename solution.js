@@ -81,10 +81,10 @@ fs.readFile('input.txt', (err, data) => {
   };
 
   const writeOutput = (output) => {
-    fs.writeFile('./output.txt', output, function(err) {
-      if (err) throw err;
-      console.log("The file was saved!");
-  });
+    fs.writeFile('./output.txt', output, (error) => {
+      if (error) throw error;
+      console.log('The file was saved!');
+    });
   };
   
   for (let i = 1; i < n; i += 1) {
