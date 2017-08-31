@@ -11,7 +11,9 @@ fs.readFile('input.txt', (err, data) => {
   let currentSubrangeTotal = 0;
   let currentRun;
   let runDirection;
+  let result = '';
   const runQueue = [];
+
 
   const enqueueRun = () => {
     if (runDirection) {
@@ -79,7 +81,7 @@ fs.readFile('input.txt', (err, data) => {
   };
 
   const writeOutput = (output) => {
-    fs.writeFile('./output.js', output, function(err) {
+    fs.writeFile('./output.txt', output, function(err) {
       if (err) throw err;
       console.log("The file was saved!");
   });
@@ -91,7 +93,7 @@ fs.readFile('input.txt', (err, data) => {
       findTrend(i);
     } else {
       // write current answer to outout file
-      writeOutput(currentSubrangeTotal);
+      result += `${currentSubrangeTotal}\n`;
       // find trend at next index
       findTrend(i);
       // decrement the first run
@@ -99,5 +101,6 @@ fs.readFile('input.txt', (err, data) => {
     }
   }
   // add this for last output which is found after last trend is found
-  writeOutput(currentSubrangeTotal);
+  result += `${currentSubrangeTotal}`;
+  writeOutput(result);
 });
