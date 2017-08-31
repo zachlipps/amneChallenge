@@ -1,9 +1,9 @@
-var fs = require('fs');
+const fs = require('fs');
 
-fs.readFile('input.txt', function(err, data) {
+fs.readFile('input.txt', (err, data) => {
   if (err) throw err;
 
-  const array = data.toString().split("\n");
+  const array = data.toString().split('\n');
   const k = Number(array[0].split(' ')[1]);
   const housePrices = array[1].split(' ');
   const n = housePrices.length;
@@ -11,7 +11,7 @@ fs.readFile('input.txt', function(err, data) {
   let currentSubrangeTotal = 0;
   let currentRun;
   let runDirection;
-  let runQueue = [];
+  const runQueue = [];
 
   const enqueueRun = () => {
     if (runDirection) {
@@ -78,6 +78,12 @@ fs.readFile('input.txt', function(err, data) {
     }
   };
 
+  const writeOutput = (output) => {
+    fs.writeFile('./output.js', output, function(err) {
+      if (err) throw err;
+      console.log("The file was saved!");
+  });
+  };
   
   for (let i = 1; i < n; i += 1) {
     if (i < k) {
@@ -85,13 +91,13 @@ fs.readFile('input.txt', function(err, data) {
       findTrend(i);
     } else {
       // write current answer to outout file
-      console.log(currentSubrangeTotal);
+      writeOutput(currentSubrangeTotal);
       // find trend at next index
       findTrend(i);
       // decrement the first run
       dequeueRun();
     }
   }
-  //add this for last output which is found after last trend is found
-  console.log(currentSubrangeTotal);
+  // add this for last output which is found after last trend is found
+  writeOutput(currentSubrangeTotal);
 });
