@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-fs.readFile('input.txt', (err, data) => {
+fs.readFile('input2.txt', (err, data) => {
   if (err) throw err;
 
   const array = data.toString().trim().split('\n');
@@ -47,8 +47,8 @@ fs.readFile('input.txt', (err, data) => {
   };
   
   const findTrend = (index) => {
-    const currentPrice = housePrices[index];
-    const previousPrice = housePrices[index - 1];
+    const currentPrice = Number(housePrices[index]);
+    const previousPrice = Number(housePrices[index - 1]);
     
     if (currentPrice > previousPrice) {
       if (runDirection === 'inc') {
@@ -85,7 +85,7 @@ fs.readFile('input.txt', (err, data) => {
   const writeOutput = (output) => {
     fs.writeFile('./output.txt', output, (error) => {
       if (error) throw error;
-      console.log('The file was saved!');
+      console.log('output saved to output.txt');
     });
   };
   
