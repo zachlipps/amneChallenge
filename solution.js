@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-fs.readFile('input2.txt', (err, data) => {
+fs.readFile('input.txt', (err, data) => {
   if (err) throw err;
 
   const array = data.toString().trim().split('\n');
@@ -88,7 +88,7 @@ fs.readFile('input2.txt', (err, data) => {
       console.log('output saved to output.txt');
     });
   };
-  
+
   for (let i = 1; i < n; i += 1) {
     if (i < k) {
       // need to sum first window and queue all of the "runs"
@@ -103,5 +103,4 @@ fs.readFile('input2.txt', (err, data) => {
   // add this for last output which is found after last trend is found
   result += `${currentSubrangeTotal}`;
   writeOutput(result);
-  console.log(runQueue);
 });
